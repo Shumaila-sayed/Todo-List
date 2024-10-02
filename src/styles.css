@@ -1,3 +1,48 @@
+ *, *::before, *::after {
+    box-sizing: border-box;
+  }
+  
+  * {
+    margin: 0;
+  }
+  
+  body {
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  }
+
+  img, svg {
+    display: block;
+    max-width: 100%;
+  }
+  
+  input, button, textarea, select {
+    font: inherit;
+  }
+
+  p, h1, h2, h3, h4, h5, h6 {
+    overflow-wrap: break-word;
+  }
+  
+ #__next {
+    isolation: isolate;
+  }
+
+:root {
+    isolation: isolate;
+    --black-bean: #250902;
+    --black-bean-light: #38040E;
+    --rosewood: #640D14;
+    --Falu-red: #800E13;
+    --Auburn: #AD2831;
+    --peach: #ffe0b5;
+    --light-purple: #e5d4ed;
+    --white: hsl(0, 0%, 100%);
+    --black: hsl(0, 0%, 0%);  
+    --rich-black-fogra-29: hsl(210, 26%, 7%);
+}
+
 body {
     background-color: blueviolet;
 }
