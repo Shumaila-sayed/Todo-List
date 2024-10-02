@@ -38,6 +38,7 @@
     --Auburn: #AD2831;
     --peach: #ffe0b5;
     --light-purple: #e5d4ed;
+    --border:  #d8c5e08e;
     --white: hsl(0, 0%, 100%);
     --black: hsl(0, 0%, 0%);  
     --rich-black-fogra-29: hsl(210, 26%, 7%);
@@ -46,42 +47,35 @@
  body {
     background-color: var(--black-bean-light);
     display: grid;
-    grid-template-columns: 0.8fr 4fr;
+    grid-template-columns: 0.9fr 4fr;
     color: var(--light-purple); 
  }
 
  .side-bar {
     background-color: var(--black-bean);
     height: 100vh;
-    padding: 1.8em;
-    
+    padding: 1.4em;
  }
 
  .logo {
     font-family:  'Courier New', monospace;
     font-weight: 800;
-    font-size: 1.5em;
+    font-size: 1.3em;
+    padding-top: 0.4em;
     background: linear-gradient(to right, #e3737a, #d42c3e);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     margin-bottom: 1.2em;
+    cursor: pointer;
  }
 
- 
-
- .add-task {
+ .add-task, .projects {
    font-weight: 900;  
    font-size: 1.1em; 
-   display: flex;
-   align-items: center;
-   gap: 0.2em;
-   cursor: pointer;
-   margin-bottom: 0.6em;
-   border: 2px ;
-   padding: 2.5px;
+   margin-bottom: 0.8em;
  }
 
- .add-task:hover {
+ .add-task:hover, .all-task:hover, .project:hover {
     background-color: var(--rosewood);
     border-radius: 8px;
  }
@@ -96,26 +90,140 @@
     background-repeat: no-repeat;
  }
 
- .all-task {
+ .all-task, .project, .add-task {
    display: flex;
    align-items: center;
    gap: 0.4em;
    cursor: pointer;
    margin-bottom: 1em;
+   border: 2px ;
+   padding: 2.8px;
+ }
+
+ .project {
+   margin-bottom: 0.2em;
  }
 
  .all-task::before {
-    content: '';
-    background-image: url(./assets/checklist_30dp_E5D4ED_FILL0_wght400_GRAD0_opsz24.png);
-    background-size: 1.4em;
-    display: inline-block;
-    width: 1.4em; 
-    height: 1.4em;
-    background-repeat: no-repeat;
+   content: '';
+   background-image: url(./assets/checklist_30dp_E5D4ED_FILL0_wght400_GRAD0_opsz24.png);
+   background-size: 1.4em;
+   display: inline-block;
+   width: 1.4em; 
+   height: 1.4em;
+   background-repeat: no-repeat;
  }
 
- .projects {
-    font-size: 1.1em;
-    font-weight: 800;
-    margin-bottom: 0.8em;
+ .project::before {
+   content: '';
+   background-image: url(./assets/folder_30dp_E5D4ED_FILL0_wght400_GRAD0_opsz24.png);
+   background-size: 1.4em;
+   display: inline-block;
+   width: 1.4em; 
+   height: 1.4em;
+   background-repeat: no-repeat;
  }
+
+ .new-project {
+   margin-top: 6px;
+   cursor: pointer;
+   font-weight: 800;
+ }
+
+ .new-project:hover {
+   color: var(--Auburn);
+ }
+
+ .main-content {
+   text-align: center;
+   margin-top: 3em;
+   padding: 2em 13em;
+ }
+
+ .main-tab {
+   display: flex;
+   justify-content: space-between;
+   border-bottom: 0.5px solid var(--border);
+   align-items: center;
+   padding: 0.5em;
+ }
+
+ .main-addTasks:hover {
+   color: var(--peach);
+   cursor: pointer;
+ }
+
+ .task {
+   display: grid;
+   grid-template-columns: 1fr 0.5fr;
+   padding: 1.4em;
+   border-bottom: 0.5px solid var(--border);
+ }
+
+ .round-mark {
+   border-radius: 50%;
+   border: 2px solid var(--border);
+   width: 16px;
+   height: 16px;
+   display: inline-block;
+   position: absolute;
+   left:  -1.6em;
+   top: 0.2em;
+   cursor: pointer;
+ }
+
+ .round-mark:hover {
+   background-color: var(--Auburn);
+ }
+
+ .task-content {
+   text-align: left;
+   position: relative;
+   margin-left: 1em;
+ }
+
+ .title {
+   font-weight: 800;
+ }
+
+ .task-details {
+   text-align: right;
+   display: grid;
+  grid-template-rows: 1fr 1fr;
+  row-gap: 0.8em;
+ }
+
+ .priority {
+   grid-row: 1;
+   border-radius: 6px;
+   width: max-content;
+   padding: 0.1em 0.6em;
+   font-weight: 800;
+   font-size: 0.8em;
+ }
+
+ .low {
+   margin-left: 6em;
+   background-color: rgb(45, 131, 45);
+ }
+
+ .urgent {
+   margin-left: 4.5em;
+   background-color: rgb(196, 26, 26);
+ }
+
+ .important {
+   margin-left: 3em;
+   background-color: rgb(161, 114, 27);
+ }
+
+ .date {
+   grid-row: 1;
+ }
+
+ .project-title {
+   grid-row: 2;
+   grid-column: 2;
+   opacity: 0.8;
+ }
+
