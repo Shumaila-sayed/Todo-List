@@ -9,6 +9,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       title: 'Production',
       template: "./src/template.html",
+      favicon: "./src/assets/priority_24dp_F02424_FILL1_wght400_GRAD0_opsz24.png",
     }),
   ],
   output: {

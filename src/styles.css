@@ -9,7 +9,7 @@
   body {
     line-height: 1.5;
     -webkit-font-smoothing: antialiased;
-    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif
   }
 
   img, svg {
@@ -29,7 +29,7 @@
     isolation: isolate;
   }
 
-:root {
+ :root {
     isolation: isolate;
     --black-bean: #250902;
     --black-bean-light: #38040E;
@@ -41,8 +41,81 @@
     --white: hsl(0, 0%, 100%);
     --black: hsl(0, 0%, 0%);  
     --rich-black-fogra-29: hsl(210, 26%, 7%);
-}
+ }
 
-body {
-    background-color: blueviolet;
-}
+ body {
+    background-color: var(--black-bean-light);
+    display: grid;
+    grid-template-columns: 0.8fr 4fr;
+    color: var(--light-purple); 
+ }
+
+ .side-bar {
+    background-color: var(--black-bean);
+    height: 100vh;
+    padding: 1.8em;
+    
+ }
+
+ .logo {
+    font-family:  'Courier New', monospace;
+    font-weight: 800;
+    font-size: 1.5em;
+    background: linear-gradient(to right, #e3737a, #d42c3e);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 1.2em;
+ }
+
+ 
+
+ .add-task {
+   font-weight: 900;  
+   font-size: 1.1em; 
+   display: flex;
+   align-items: center;
+   gap: 0.2em;
+   cursor: pointer;
+   margin-bottom: 0.6em;
+   border: 2px ;
+   padding: 2.5px;
+ }
+
+ .add-task:hover {
+    background-color: var(--rosewood);
+    border-radius: 8px;
+ }
+
+ .add-task::before {
+    content: '';
+    background-image: url(./assets/add_circle_30dp_AD2831_FILL1_wght400_GRAD0_opsz24.png);
+    background-size: 1.4em;
+    display: inline-block;
+    width: 1.4em; 
+    height: 1.4em;
+    background-repeat: no-repeat;
+ }
+
+ .all-task {
+   display: flex;
+   align-items: center;
+   gap: 0.4em;
+   cursor: pointer;
+   margin-bottom: 1em;
+ }
+
+ .all-task::before {
+    content: '';
+    background-image: url(./assets/checklist_30dp_E5D4ED_FILL0_wght400_GRAD0_opsz24.png);
+    background-size: 1.4em;
+    display: inline-block;
+    width: 1.4em; 
+    height: 1.4em;
+    background-repeat: no-repeat;
+ }
+
+ .projects {
+    font-size: 1.1em;
+    font-weight: 800;
+    margin-bottom: 0.8em;
+ }
