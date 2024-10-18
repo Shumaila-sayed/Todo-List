@@ -11,8 +11,53 @@
         <div class="logo">
             <h1>TASKBOARD</h1>
         </div>
-        <div class="task-board">
+
+        <div>
             <p class="add-task">Add Tasks</p>
+
+            <dialog class="side-dialog">
+              <div class="div-form">
+              <form class="side-form">
+
+                <div id="taskname">
+                <input class="task-name" type="text" placeholder="Task name (required)" required >
+                </div>
+
+                <div id="taskdetail">
+                <textarea class="task-description" placeholder="Notes"></textarea>
+                </div>
+
+               <div id="taskdate">
+                <input type="date" class="task-date" required>
+               </div>
+
+                <p id="taskpriority">
+                <select class="task-priority">
+                  <option>No Priority</option>
+                  <option>low</option>
+                  <option>Important</option>
+                  <option>Urgent</option>
+                </select>
+              </p>
+
+                <p id="taskproject">
+                <select class="task-projects">
+                  <option selected>Task</option>
+                  <option>Chores</option>
+                  <option>Mental health</option>
+                  <option>Japan Trip</option>
+                </select> 
+              </p>
+
+                <div class="btns">
+                    <button id="close-dialog">Close</button>
+                    <button formmethod="dialog" id="addToTask">Add</button>
+                </div>
+
+              </form>
+              </div>
+            </dialog>
+
             <p class="all-task">All Tasks</p>
             <div class="project-list">
                 <p class="projects">My Projects</p>
@@ -23,6 +68,7 @@
             <p class="new-project">+ Create a new project</p>
         </div>
     </section>
+
     <section class="main-content">
         <div class="main-tab">
         <h2 class="main-heading">All Tasks</h2>

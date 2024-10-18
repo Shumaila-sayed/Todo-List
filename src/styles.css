@@ -1,4 +1,4 @@
- *, *::before, *::after {
+  *, *::before, *::after {
     box-sizing: border-box;
   }
   
@@ -29,6 +29,18 @@
     isolation: isolate;
   }
 
+  button, input, select, textarea {
+    font-family: inherit;
+    font-size: 100%;
+  }
+
+  input, textarea, select, button {
+  width: 150px;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+ }
+
  :root {
     isolation: isolate;
     --black-bean: #250902;
@@ -38,7 +50,7 @@
     --Auburn: #AD2831;
     --peach: #ffe0b5;
     --light-purple: #e5d4ed;
-    --border:  #d8c5e08e;
+    --border:  #d8c5e071;
     --white: hsl(0, 0%, 100%);
     --black: hsl(0, 0%, 0%);  
     --rich-black-fogra-29: hsl(210, 26%, 7%);
@@ -54,7 +66,7 @@
  .side-bar {
     background-color: var(--black-bean);
     height: 100vh;
-    padding: 1.4em;
+    padding: 1.5em;
  }
 
  .logo {
@@ -62,11 +74,13 @@
     font-weight: 800;
     font-size: 1.3em;
     padding-top: 0.4em;
-    background: linear-gradient(to right, #e3737a, #d42c3e);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: var(--white);
     margin-bottom: 1.2em;
     cursor: pointer;
+ }
+
+ .add-task {
+    margin-top: -0.5em;
  }
 
  .add-task, .projects {
@@ -225,5 +239,68 @@
    grid-row: 2;
    grid-column: 2;
    opacity: 0.8;
+ } 
+
+ dialog[open] {
+   display: contents;
  }
 
+ input, textarea, select, option {
+    background-color: var(--Auburn);
+    color: var(--light-purple);
+    border: 0.1px solid var(--border);
+    width: 13em;
+    padding: 0.2em 0.5em;
+ }
+
+ .div-form {
+    width: 13em;
+    margin: -0.8em 0 1em -0.5em;
+ }
+
+ .side-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4em;
+ }
+
+ .task-description::placeholder, .task-name::placeholder {
+    color: var(--light-purple);
+    font-size: 0.9em;
+ }
+
+ .task-name:focus, .task-description:focus, .task-date:focus, 
+ .task-priority:focus, .task-projects:focus  {
+  outline: none;
+ }
+
+ option:focus {
+  border: 0.1px solid var(--border) ;
+ }
+
+ .task-date {
+    margin-top: -0.4em;
+ }
+
+ .btns {
+    display: flex;
+    gap: 4px;
+ }
+
+ button {
+    cursor: pointer; 
+    border: none; 
+    border-radius: 0.2em; 
+    font-weight: bolder;
+ }
+
+ #close-dialog {
+    background-color: var(--Auburn);
+    color: var(--light-purple);
+    border: 0.1px solid var(--border);
+ }
+
+ #addToTask {
+    background-color: var(--peach);
+    color: var(--black-bean);
+ }
