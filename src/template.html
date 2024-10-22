@@ -20,19 +20,19 @@
               <form class="side-form">
 
                 <div id="taskname">
-                <input class="task-name" type="text" placeholder="Task name (required)" required >
+                <input class="task-name" type="text" name="task" placeholder="Task name (required)" autocapitalize="on" required >
                 </div>
 
                 <div id="taskdetail">
-                <textarea class="task-description" placeholder="Notes"></textarea>
+                <textarea class="task-description" name="description" placeholder="Notes..."></textarea>
                 </div>
 
                <div id="taskdate">
-                <input type="date" class="task-date" required>
+                <input type="date" class="task-date" name="date" required>
                </div>
 
                 <p id="taskpriority">
-                <select class="task-priority">
+                <select class="task-priority" name="priority">
                   <option>No Priority</option>
                   <option>low</option>
                   <option>Important</option>
@@ -41,7 +41,7 @@
               </p>
 
                 <p id="taskproject">
-                <select class="task-projects">
+                <select class="task-projects" name="project">
                   <option selected>Task</option>
                   <option>Chores</option>
                   <option>Mental health</option>
@@ -59,20 +59,36 @@
             </dialog>
 
             <p class="all-task">All Tasks</p>
-            <div class="project-list">
-                <p class="projects">My Projects</p>
-                <p class="project">Chores</p>
-                <p class="project">Mental Health</p>
-                <p class="project">Japan trip</p>
+            
+                <div class="projects">My Projects<div class="add-icon"><img src="./assets/add_28dp_F6EBFC_FILL0_wght400_GRAD0_opsz24.svg" title="New"/>
+                 </div></div>
+
+                 <dialog class="Project-dialog" >
+                    <form method="dialog">
+                      <div class="project-name-input">
+                        <img class="project-cancel" src="./assets/cancel_26dp_F02424_FILL0_wght400_GRAD0_opsz24.svg" title="Cancel">
+                        <input type="text" placeholder="Project Name + [Enter]" required>
+                         </div>
+                    </form>
+                 </dialog>
+
+                <div class="project-list">
+                <div class="project">Chores<div class="project-icon"><img src="./assets/edit_28dp_F6EBFC_FILL0_wght400_GRAD0_opsz24.svg" title="Edit"/>
+                  <img src="./assets/delete_28dp_F6EBFC_FILL0_wght400_GRAD0_opsz24.svg" title="Delete"/></div>
+                 </div>
+                <div class="project">Mental Health<div class="project-icon"><img src="./assets/edit_28dp_F6EBFC_FILL0_wght400_GRAD0_opsz24.svg" title="Edit"/>
+                  <img src="./assets/delete_28dp_F6EBFC_FILL0_wght400_GRAD0_opsz24.svg" title="Delete"/></div>
+                 </div>
+                <div class="project">Japan trip<div class="project-icon"><img src="./assets/edit_28dp_F6EBFC_FILL0_wght400_GRAD0_opsz24.svg" title="Edit"/>
+                  <img src="./assets/delete_28dp_F6EBFC_FILL0_wght400_GRAD0_opsz24.svg" title="Delete"/></div>
+                 </div>
             </div>
-            <p class="new-project">+ Create a new project</p>
         </div>
     </section>
 
     <section class="main-content">
         <div class="main-tab">
-        <h2 class="main-heading">All Tasks</h2>
-        <p class="main-addTasks">+ Add task</p>
+        <h2>All Tasks</h2>
         </div>
         <div class="task">
             <div class="task-content">

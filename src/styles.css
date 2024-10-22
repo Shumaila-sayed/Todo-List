@@ -12,6 +12,19 @@
     font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif
   }
 
+ ::-webkit-scrollbar {
+    width: 0.3em;
+ }
+
+ ::-webkit-scrollbar-thumb {
+    background: var(--Auburn); 
+    border-radius: 1.5em;
+ }
+
+ ::-webkit-scrollbar-thumb:hover {
+    background: var(--light-purple);
+ }
+
   img, svg {
     display: block;
     max-width: 100%;
@@ -49,7 +62,7 @@
     --Falu-red: #800E13;
     --Auburn: #AD2831;
     --peach: #ffe0b5;
-    --light-purple: #e5d4ed;
+    --light-purple: #f6ebfc;
     --border:  #d8c5e071;
     --white: hsl(0, 0%, 100%);
     --black: hsl(0, 0%, 0%);  
@@ -65,12 +78,13 @@
 
  .side-bar {
     background-color: var(--black-bean);
+    min-height: 100%;
     height: 100vh;
     padding: 1.5em;
  }
 
  .logo {
-    font-family:  'Courier New', monospace;
+    font-family: 'Courier New', monospace;
     font-weight: 800;
     font-size: 1.3em;
     padding-top: 0.4em;
@@ -85,11 +99,11 @@
 
  .add-task, .projects {
    font-weight: 900;  
-   font-size: 1.1em; 
-   margin-bottom: 0.8em;
+   font-size: 1.1em;
+   margin-left: -0.4em;
  }
 
- .add-task:hover, .all-task:hover, .project:hover {
+ .add-task:hover, .all-task:hover, .project:hover, .projects:hover {
     background-color: var(--rosewood);
     border-radius: 8px;
  }
@@ -104,18 +118,19 @@
     background-repeat: no-repeat;
  }
 
- .all-task, .project, .add-task {
+ .all-task, .project, .add-task, .projects {
    display: flex;
    align-items: center;
    gap: 0.4em;
    cursor: pointer;
-   margin-bottom: 1em;
+   margin-bottom: 0.6em;
    border: 2px ;
    padding: 2.8px;
  }
 
  .project {
    margin-bottom: 0.2em;
+   position: relative;
  }
 
  .all-task::before {
@@ -138,33 +153,36 @@
    background-repeat: no-repeat;
  }
 
- .new-project {
-   margin-top: 6px;
-   cursor: pointer;
-   font-weight: 800;
+ .add-icon {
+    margin-left: 4em;
+    width: 1.4em;
+    height: 1.4em;
  }
 
- .new-project:hover {
-   color: var(--Auburn);
+ .project-icon {
+    display: none;
+ }
+
+ .project:hover > .project-icon {
+    display: flex;
+    gap: 0.4em;
+    width: 1.1em;
+    height: 1.1em;
+    position: absolute;   
+    left: 9.6em;
+    bottom: 0.4em;
  }
 
  .main-content {
    text-align: center;
-   margin-top: 3em;
+   margin-top: 2.5em;
    padding: 2em 13em;
  }
 
  .main-tab {
    display: flex;
-   justify-content: space-between;
    border-bottom: 0.5px solid var(--border);
-   align-items: center;
    padding: 0.5em;
- }
-
- .main-addTasks:hover {
-   color: var(--peach);
-   cursor: pointer;
  }
 
  .task {
@@ -172,6 +190,12 @@
    grid-template-columns: 1fr 0.5fr;
    padding: 1.4em;
    border-bottom: 0.5px solid var(--border);
+   cursor: pointer;
+ }
+
+ .task:hover {
+   background-color: var(--black-bean);
+   border-radius: 0.6em;
  }
 
  .round-mark {
@@ -203,8 +227,8 @@
  .task-details {
    text-align: right;
    display: grid;
-  grid-template-rows: 1fr 1fr;
-  row-gap: 0.8em;
+   grid-template-rows: 1fr 1fr;
+   row-gap: 0.8em;
  }
 
  .priority {
@@ -252,10 +276,14 @@
     width: 13em;
     padding: 0.2em 0.5em;
  }
+ 
+ input:focus, textarea:focus, select:focus {
+    outline: none;
+ }
 
  .div-form {
     width: 13em;
-    margin: -0.8em 0 1em -0.5em;
+    margin: -0.4em 0 1em -0.5em;
  }
 
  .side-form {
@@ -264,18 +292,18 @@
     gap: 0.4em;
  }
 
- .task-description::placeholder, .task-name::placeholder {
+ input::placeholder, textarea::placeholder {
     color: var(--light-purple);
     font-size: 0.9em;
+    opacity: 0.7;
  }
 
- .task-name:focus, .task-description:focus, .task-date:focus, 
- .task-priority:focus, .task-projects:focus  {
-  outline: none;
+ .task-description {
+    resize: vertical;
  }
-
- option:focus {
-  border: 0.1px solid var(--border) ;
+ 
+ option {
+    font-size: 0.8em;
  }
 
  .task-date {
@@ -303,4 +331,20 @@
  #addToTask {
     background-color: var(--peach);
     color: var(--black-bean);
+ }
+
+ .project-name-input {
+    display: flex;
+    align-items: center;
+    gap: 0.4em;
+ }
+
+ .project-name-input > input {
+    width: 10.2em;
+ }
+
+ .project-cancel {
+  width: 1.4em;
+  height: 1.4em;  
+  cursor: pointer;
  }
