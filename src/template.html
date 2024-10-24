@@ -19,20 +19,20 @@
               <div class="div-form">
               <form class="side-form">
 
-                <div id="taskname">
-                <input class="task-name" type="text" name="task" placeholder="Task name (required)" autocapitalize="on" required >
+                <div>
+                <input id="task-name" type="text" name="task" placeholder="Task name (required)" autocapitalize="on" required >
                 </div>
 
-                <div id="taskdetail">
-                <textarea class="task-description" name="description" placeholder="Notes..."></textarea>
+                <div>
+                <textarea id="task-description" name="description" placeholder="Notes..."></textarea>
                 </div>
 
-               <div id="taskdate">
-                <input type="date" class="task-date" name="date" required>
+               <div>
+                <input type="date" id="task-date" name="date" required>
                </div>
 
-                <p id="taskpriority">
-                <select class="task-priority" name="priority">
+                <p>
+                <select id="task-priority" name="priority">
                   <option>No Priority</option>
                   <option>low</option>
                   <option>Important</option>
@@ -40,8 +40,8 @@
                 </select>
               </p>
 
-                <p id="taskproject">
-                <select class="task-projects" name="project">
+                <p >
+                <select id="task-projects" name="project">
                   <option selected>Task</option>
                   <option>Chores</option>
                   <option>Mental health</option>
@@ -90,6 +90,8 @@
         <div class="main-tab">
         <h2>All Tasks</h2>
         </div>
+
+        <div class="task-list">
         <div class="task">
             <div class="task-content">
               <span class="round-mark"></span>
@@ -128,6 +130,8 @@
               <p class="project-title">#Japan Trip</p>
             </div>
         </div>
+
+      </div>
     </section>
     
 </body>

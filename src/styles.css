@@ -235,9 +235,12 @@
    grid-row: 1;
    border-radius: 6px;
    width: max-content;
+   max-height: fit-content;
    padding: 0.1em 0.6em;
    font-weight: 800;
    font-size: 0.8em;
+   margin-left: 2.6em;
+   background-color: var(--border);
  }
 
  .low {
@@ -298,7 +301,7 @@
     opacity: 0.7;
  }
 
- .task-description {
+ #task-description {
     resize: vertical;
  }
  
@@ -306,7 +309,7 @@
     font-size: 0.8em;
  }
 
- .task-date {
+ #task-date {
     margin-top: -0.4em;
  }
 
