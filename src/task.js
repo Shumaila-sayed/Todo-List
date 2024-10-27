@@ -1,219 +1,252 @@
-  import { loadTaskBoard } from  "./DOM";
-  import deleteicon from './assets/delete_28dp_F6EBFC_FILL0_wght400_GRAD0_opsz24.svg';
-  loadTaskBoard();
+import { loadTaskBoard } from "./DOM";
+import deleteicon from './assets/delete_28dp_F6EBFC_FILL0_wght400_GRAD0_opsz24.svg';
 
-  class Task {
-    constructor(name, description, date, priority, project) {
-     this.name = name;
-     this.description = description;
-     this.date = date;
-     this.priority = priority;
-     this.project = project;
-    }
-   completeTask() {
-     allTask.splice(allTask.indexOf(this), 1);
-   }
- }
+loadTaskBoard();
 
-  let allTask = [];
-
-  const form = document.querySelector(".side-dialog");
-  let taskList = document.querySelector('.task-list');
-
-  form.addEventListener('submit', (e)=> {
-    e.preventDefault();
-
-    const taskName = document.getElementById('task-name').value
-    const taskDescription = document.getElementById('task-description').value
-    const taskDate = document.getElementById('task-date').value
-    const taskPriority = document.getElementById('task-priority').value
-    const taskProject = document.getElementById('task-projects').value
-    // function to add task to allTask array
-    addTaskToAllTasks(taskName, taskDescription, taskDate, taskPriority, taskProject);
-    // function to display tasks on screen
-    displayTask(allTask);
-  })
-
- taskList.addEventListener('click', (e) => {
-   if(e.target.classList.contains('round-mark')){
-      const task = allTask[Array.from(e.target.parentNode.parentNode.parentNode.children).indexOf(e.target.parentNode.parentNode)];
-      task.completeTask();
-      displayTask(allTask);
-   }
-  })
-
-  function addTaskToAllTasks(name, description, date, priority, project) {
-    const newTask = new Task(name, description, date, priority, project);
-    allTask.push(newTask);
-  }
-
-  // defaults values 
-  addTaskToAllTasks('CleanUp', 'Deep clean bedroom, living room, bathroom, and kitchen.', '5 Oct 2024', 'low', 'Chores');
-  addTaskToAllTasks('Finish Home Page', 'Fix bugs', '4 Oct 2024', 'Urgent', 'Website');
-  addTaskToAllTasks('Plan itinerary', 'Search for beautifull places.', '8 Oct 2024', 'Important', 'Japan Trip');
-
-  function displayTask(arr) {
-    taskList.innerHTML = '';
-    arr.forEach(task => {
-
-      const taskDiv = document.createElement('div');
-      taskDiv.className = "task";
-
-      const taskContent = document.createElement('div');
-      taskContent.className = "task-content";
-
-      const completeTask = document.createElement('span');
-      completeTask.className = 'round-mark';
-      taskContent.appendChild(completeTask);
-
-      const taskTitle = document.createElement('p');
-      taskTitle.textContent = task.name;
-      taskTitle.className = 'title';
-      taskContent.appendChild(taskTitle);
-
-      const taskDecription = document.createElement('p');
-      taskDecription.textContent = task.description;
-      taskDecription.className = 'description';
-      taskContent.appendChild(taskDecription);
-
-      taskDiv.appendChild(taskContent);
-
-      const taskDetails = document.createElement('div');
-      taskDetails.className = 'task-details';
-      const taskPriority = document.createElement('p');
-      taskPriority.className = 'priority';
-      taskPriority.textContent = task.priority;
-
-      if(task.priority == 'low') {
-          taskPriority.classList.add('low');
-       } else if(task.priority == 'Important') {
-          taskPriority.classList.add('important')
-       } else if(task.priority == 'Urgent') {
-          taskPriority.classList.add( 'urgent');
-       } 
-      taskDetails.appendChild(taskPriority);
-
-      const taskDate = document.createElement('p')
-      taskDate.className = 'date';
-      taskDate.textContent = task.date;
-      taskDetails.appendChild(taskDate);
-
-      const taskProject = document.createElement('p');
-      taskProject.className = 'project-title';
-      taskProject.textContent = `#${task.project}`;
-      taskDetails.appendChild(taskProject);
-
-      taskDiv.appendChild(taskDetails);
-      taskList.appendChild(taskDiv)
-    })
-  }
-  displayTask(allTask)
-
-  // project stuffs
-  class Project {
-    constructor(name) {
+class Task {
+  constructor(name, description, date, priority, project) {
     this.name = name;
-    }
-    deleteProject() {
-    allProject.splice(allProject.indexOf(this), 1);
-    }
+    this.description = description;
+    this.date = date;
+    this.priority = priority;
+    this.project = project;
   }
 
-  let allProject = []; 
-  const projectDialog = document.querySelector('.Project-dialog');
-  const projectList = document.querySelector('.project-list');
+  completeTask() {
+    removeTask(this);
+  }
+}
 
-  projectDialog.addEventListener('submit', (e)=> {
-    e.preventDefault();
-
-    const projectName = document.getElementById('project-Name').value
-    addProjectToAllProject(projectName);
-    displayProject();
-    displayOptions();
-  })
-
-  function addProjectToAllProject(name) {
-    const newproject = new Project(name);
-    allProject.push(newproject);
+class Project {
+  constructor(name) {
+    this.name = name;
   }
 
-  // default values
-  addProjectToAllProject('Chores')
-  addProjectToAllProject('Mental health');
-  addProjectToAllProject('Japan Trip')
+  deleteProject() {
+    removeProject(this);
+  }
+}
 
- function displayProject() {
+let allTasks = [];
+let allProjects = [];
+let filteredProjectName = null;
+
+const form = document.querySelector(".side-dialog");
+const projectDialog = document.querySelector('.Project-dialog');
+const taskList = document.querySelector('.task-list');
+const projectList = document.querySelector('.project-list');
+const taskProjects = document.querySelector('#task-projects');
+const allTasksButton = document.querySelector('.all-task');
+let heading = document.querySelector('h2');
+
+initializeApp();
+
+function initializeApp() {
+  // Initial default values for tasks and projects
+  addTask('CleanUp', 'Deep clean bedroom, living room, bathroom, and kitchen.', '5 Oct 2024', 'low', 'Chores');
+  addTask('Finish Home Page', 'Fix bugs', '4 Oct 2024', 'Urgent', 'Website');
+  addTask('Plan itinerary', 'Search for beautiful places.', '8 Oct 2024', 'Important', 'Japan Trip');
+
+  addProject('Chores');
+  addProject('Mental health');
+  addProject('Japan Trip');
+
+  setupEventListeners();
+  restrictDateInput()
+  displayTasks(allTasks);
+  displayProjects();
+  updateProjectOptions();
+}
+
+function restrictDateInput() {
+  const taskDateInput = document.getElementById('task-date');
+  const today = new Date().toISOString().split('T')[0]; // Format today's date as "YYYY-MM-DD"
+  taskDateInput.min = today;
+}
+
+function formatDate(dateString) {
+  const options = { day: 'numeric', month: 'short', year: 'numeric' };
+  return new Date(dateString).toLocaleDateString('en-GB', options);
+}
+
+function setupEventListeners() {
+  form.addEventListener('submit', handleTaskSubmit);
+  projectDialog.addEventListener('submit', handleProjectSubmit);
+  taskList.addEventListener('click', handleTaskCompletion);
+  projectList.addEventListener('click', handleProjectActions);
+
+  allTasksButton.addEventListener('click', () => {
+    filteredProjectName = null;
+    heading.textContent = "All Tasks"
+    displayTasks(allTasks);
+  });
+}
+
+function handleTaskSubmit(e) {
+  e.preventDefault();
+  const taskName = document.getElementById('task-name').value;
+  const taskDescription = document.getElementById('task-description').value;
+  const taskDate = document.getElementById('task-date').value;
+  const taskPriority = document.getElementById('task-priority').value;
+  const taskProject = document.getElementById('task-projects').value;
+
+  addTask(taskName, taskDescription, taskDate, taskPriority, taskProject);
+  displayTasks(currentDisplayedTasks());
+}
+
+function handleProjectSubmit(e) {
+  e.preventDefault();
+  const projectName = document.getElementById('project-Name').value;
+
+  addProject(projectName);
+  displayProjects();
+  updateProjectOptions();
+}
+
+function handleTaskCompletion(e) {
+  if (e.target.classList.contains('round-mark')) {
+    const taskIndex = Array.from(e.target.closest('.task-list').children).indexOf(e.target.closest('.task'));
+    const task = allTasks[taskIndex];
+    task.completeTask();
+    displayTasks(currentDisplayedTasks());
+  }
+}
+
+function handleProjectActions(e) {
+  if (e.target.classList.contains('delete')) {
+    const projectIndex = Array.from(e.target.closest('.project-list').children).indexOf(e.target.closest('.project'));
+    const project = allProjects[projectIndex];
+    project.deleteProject();
+
+    allTasks = allTasks.filter(task => task.project !== project.name);
+    displayTasks(currentDisplayedTasks());
+    displayProjects();
+  } else if (e.target.closest('.project')) {
+    filteredProjectName = e.target.closest('.project').textContent;
+    heading.textContent = filteredProjectName;
+    displayTasks(currentDisplayedTasks());
+  }
+}
+
+// Task-related functions
+function addTask(name, description, date, priority, project) {
+  const formattedDate = formatDate(date); // Format the date before adding
+  const newTask = new Task(name, description, formattedDate, priority, project);
+  allTasks.push(newTask);
+}
+
+function removeTask(task) {
+  allTasks = allTasks.filter(t => t !== task);
+}
+
+function displayTasks(arr) {
+  taskList.innerHTML = '';
+
+  if (arr.length === 0) {
+    const emptyMessage = document.createElement('p');
+    emptyMessage.className = 'empty-message';
+    emptyMessage.textContent = "Congrats! You've completed all the tasks.";
+    taskList.appendChild(emptyMessage);
+    return;
+  }
+  
+  arr.forEach(task => taskList.appendChild(createTaskElement(task)));
+}
+
+function createTaskElement(task) {
+  const taskDiv = document.createElement('div');
+  taskDiv.className = "task";
+
+  const taskContent = document.createElement('div');
+  taskContent.className = "task-content";
+
+  const completeTask = document.createElement('span');
+  completeTask.className = 'round-mark';
+  taskContent.appendChild(completeTask);
+
+  const taskTitle = document.createElement('p');
+  taskTitle.textContent = task.name;
+  taskTitle.className = 'title';
+  taskContent.appendChild(taskTitle);
+
+  const taskDescription = document.createElement('p');
+  taskDescription.textContent = task.description;
+  taskDescription.className = 'description';
+  taskContent.appendChild(taskDescription);
+
+  taskDiv.appendChild(taskContent);
+
+  const taskDetails = document.createElement('div');
+  taskDetails.className = 'task-details';
+
+  const taskPriority = document.createElement('p');
+  taskPriority.className = 'priority';
+  taskPriority.textContent = task.priority;
+  taskPriority.classList.add(task.priority.toLowerCase());
+  taskDetails.appendChild(taskPriority);
+
+  const taskDate = document.createElement('p');
+  taskDate.className = 'date';
+  taskDate.textContent = task.date;
+  taskDetails.appendChild(taskDate);
+
+  const taskProject = document.createElement('p');
+  taskProject.className = 'project-title';
+  taskProject.textContent = `#${task.project}`;
+  taskDetails.appendChild(taskProject);
+
+  taskDiv.appendChild(taskDetails);
+  return taskDiv;
+}
+
+function currentDisplayedTasks() {
+  return filteredProjectName ? allTasks.filter(task => task.project === filteredProjectName) : allTasks;
+}
+
+// Project-related functions
+function addProject(name) {
+  const newProject = new Project(name);
+  allProjects.push(newProject);
+}
+
+function removeProject(project) {
+  allProjects = allProjects.filter(p => p !== project);
+}
+
+function displayProjects() {
   projectList.innerHTML = '';
+  allProjects.forEach(project => projectList.appendChild(createProjectElement(project)));
+}
 
-  allProject.forEach(project => {
+function createProjectElement(project) {
+  const projectDiv = document.createElement('div');
+  projectDiv.className = 'project';
+  projectDiv.textContent = project.name;
 
-    const projectDiv = document.createElement('div');
-    projectDiv.className = 'project';
-    projectDiv.textContent = project.name;
+  const projectIcon = document.createElement('div');
+  projectIcon.className = 'project-icon';
 
-    const projectIcon = document.createElement('div');
-    projectIcon.className = 'project-icon';
+  const deleteIcon = document.createElement('img');
+  deleteIcon.src = deleteicon;
+  deleteIcon.title = 'Delete';
+  deleteIcon.className = 'delete';
+  projectIcon.appendChild(deleteIcon);
 
-    const deleteIcon = document.createElement('img');
-    deleteIcon.src = deleteicon;
-    deleteIcon.title = 'Delete';
-    deleteIcon.className = 'delete'
-    projectIcon.appendChild(deleteIcon);
+  projectDiv.appendChild(projectIcon);
+  return projectDiv;
+}
 
-    projectDiv.appendChild(projectIcon);
-    projectList.appendChild(projectDiv);
-  })
- }
- displayProject()
+function updateProjectOptions() {
+  taskProjects.innerHTML = '';
 
-  projectList.addEventListener('click', (e) => {
-    if(e.target.classList.contains('delete')){
-      const project = allProject[Array.from(e.target.parentNode.parentNode.parentNode.children).indexOf(e.target.parentNode.parentNode)];
-      project.deleteProject();
+  const defaultOption = document.createElement('option');
+  defaultOption.textContent = 'Tasks';
+  defaultOption.setAttribute('selected', true);
+  taskProjects.appendChild(defaultOption);
 
-      let filteredTask = allTask.filter(checkName)
-      function checkName(task) {
-       return task.project !== project.name;
-     }
-
-      displayTask(filteredTask)
-      displayProject();
-    }
-  })
-
-  // Adding options when project is added
-  const taskProjects = document.querySelector('#task-projects');
-
-  function displayOptions() {
-    taskProjects.innerHTML = '';
-
-    const defaultOption = document.createElement('option');
-    defaultOption.textContent = 'Tasks';
-    defaultOption.setAttribute('selected', true);
-    taskProjects.appendChild(defaultOption);
-
-    allProject.forEach(project => {
-      const option = document.createElement('option');
-      option.textContent = project.name;
-      taskProjects.appendChild(option)
-    })
-  }
-  displayOptions();
-
-  // displaying project specific task
-
-  const clickProject = document.querySelectorAll('.project');
-  const clickAllTask = document.querySelector('.all-task');
-
-  clickProject.forEach(project => project.addEventListener('click', filterTaskandProject)); 
-  clickAllTask.addEventListener('click', () => displayTask(allTask)); 
-
-  function filterTaskandProject(tabName) {
-   let targetName = tabName.target.textContent
-   let filteredTask = allTask.filter(checkName)
-
-   function checkName(task) {
-    return task.project == targetName;
-  }
-   displayTask(filteredTask);
-  }
+  allProjects.forEach(project => {
+    const option = document.createElement('option');
+    option.textContent = project.name;
+    taskProjects.appendChild(option);
+  });
+}
