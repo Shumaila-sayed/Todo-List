@@ -16,6 +16,7 @@
  }
 
   let allTask = [];
+
   const form = document.querySelector(".side-dialog");
   let taskList = document.querySelector('.task-list');
 
@@ -30,14 +31,14 @@
     // function to add task to allTask array
     addTaskToAllTasks(taskName, taskDescription, taskDate, taskPriority, taskProject);
     // function to display tasks on screen
-    displayTask();
+    displayTask(allTask);
   })
 
  taskList.addEventListener('click', (e) => {
    if(e.target.classList.contains('round-mark')){
       const task = allTask[Array.from(e.target.parentNode.parentNode.parentNode.children).indexOf(e.target.parentNode.parentNode)];
       task.completeTask();
-      displayTask();
+      displayTask(allTask);
    }
   })
 
@@ -46,13 +47,14 @@
     allTask.push(newTask);
   }
 
+  // defaults values 
   addTaskToAllTasks('CleanUp', 'Deep clean bedroom, living room, bathroom, and kitchen.', '5 Oct 2024', 'low', 'Chores');
   addTaskToAllTasks('Finish Home Page', 'Fix bugs', '4 Oct 2024', 'Urgent', 'Website');
   addTaskToAllTasks('Plan itinerary', 'Search for beautifull places.', '8 Oct 2024', 'Important', 'Japan Trip');
 
-  function displayTask() {
+  function displayTask(arr) {
     taskList.innerHTML = '';
-    allTask.forEach(task => {
+    arr.forEach(task => {
 
       const taskDiv = document.createElement('div');
       taskDiv.className = "task";
@@ -105,7 +107,7 @@
       taskList.appendChild(taskDiv)
     })
   }
-  displayTask()
+  displayTask(allTask)
 
   // project stuffs
   class Project {
@@ -168,6 +170,13 @@
     if(e.target.classList.contains('delete')){
       const project = allProject[Array.from(e.target.parentNode.parentNode.parentNode.children).indexOf(e.target.parentNode.parentNode)];
       project.deleteProject();
+
+      let filteredTask = allTask.filter(checkName)
+      function checkName(task) {
+       return task.project !== project.name;
+     }
+
+      displayTask(filteredTask)
       displayProject();
     }
   })
@@ -190,3 +199,21 @@
     })
   }
   displayOptions();
+
+  // displaying project specific task
+
+  const clickProject = document.querySelectorAll('.project');
+  const clickAllTask = document.querySelector('.all-task');
+
+  clickProject.forEach(project => project.addEventListener('click', filterTaskandProject)); 
+  clickAllTask.addEventListener('click', () => displayTask(allTask)); 
+
+  function filterTaskandProject(tabName) {
+   let targetName = tabName.target.textContent
+   let filteredTask = allTask.filter(checkName)
+
+   function checkName(task) {
+    return task.project == targetName;
+  }
+   displayTask(filteredTask);
+  }
