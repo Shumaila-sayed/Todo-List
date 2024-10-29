@@ -2,9 +2,8 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  entry: {
-    app: './src/index.js',
-  },
+  entry: './src/index.js',
+ 
   plugins: [
     new HtmlWebpackPlugin({
       title: 'Production',
@@ -13,7 +12,7 @@ module.exports = {
     }),
   ],
   output: {
-    filename: "main.bundle.js",
+    filename: "main.js",
     path: path.resolve(__dirname, 'dist'),
     clean: true,
   },
@@ -24,16 +23,8 @@ module.exports = {
         use: ["style-loader", "css-loader"],
       },
       {
-        test: /\.html$/i,
-        loader: "html-loader",
-      },
-      {
-        test: /\.(png|jpg|jpeg|gif)$/i,
-        type: "asset/resource", 
-      },
-      {
-        test: /\.svg$/i,
-        type: "asset/inline", 
+        test: /\.(png|svg|jpg|jpeg|gif)$/i,
+        type: "asset/resource",
       },
     ],
   },
